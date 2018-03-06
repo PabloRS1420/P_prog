@@ -21,7 +21,13 @@ struct _Space {
   Id east;
   Id west;
   Id object;
-  char* gdesc[3];
+  Gdesc *gdesc;
+};
+
+struct _Gdesc {
+  char *gdesc1[7];
+  char *gdesc2[7];
+  char *gdesc3[7];
 };
 
 /****************************/
@@ -50,9 +56,9 @@ Space* space_create(Id id) {
   newSpace->west = NO_ID;
 
   newSpace->object = FALSE;
-  newSpace->gdesc[0][0] = '\0';
-  newSpace->gdesc[1][0] = '\0';
-  newSpace->gdesc[2][0] = '\0';
+  newSpace->gdesc->gdesc1 = '\0';
+  newSpace->gdesc->gdesc2 = '\0';
+  newSpace->gdesc->gdesc3 = '\0';
 
   return newSpace;
 }
@@ -120,14 +126,15 @@ STATUS space_set_object(Space* space, Id id) {
   return OK;
 }
 
-STATUS space_set_gdesc (Space* space, char* gdesc[]){
+STATUS space_set_gdesc (Space* space, Gdesc* gdesc){
   int i=0;
   if (!space || gdesc == NULL) {
     return ERROR;
   }
-  for (i=0; i<3; i++){
-    strcpy(space->gdesc[i], gdesc[i]);
-  }
+  strcpy(space->gdesc->gdesc1, gdesc->gdesc1);
+  strcpy(space->gdesc->gdesc2, gdesc->gdesc2);
+  strcpy(space->gdesc->gdesc3, gdesc->gdesc3);
+  
   return OK;
 }
 
@@ -181,7 +188,7 @@ Id space_get_object(Space* space) {
   return space->object;
 }
 
-char** space_get_gdesc(Space* space) {
+gdesc* space_get_gdesc(Space* space) {
   if (!space) {
     return NULL;
   }

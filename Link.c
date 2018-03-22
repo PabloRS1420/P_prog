@@ -44,3 +44,91 @@ STATUS link_destroy(Link* link) {
     
     free(link);
 }
+
+STATUS link_set_name(Link* link, char* name) {
+    if (!link || !name) {
+        return ERROR;
+    }
+
+    if (!strcpy(link->name, name)) {
+        return ERROR;
+    }
+
+    return OK;
+}
+
+const char* link_get_name(Link* link) {
+    if (!link) {
+        return NULL;
+    }
+  return link->name;
+} 
+
+STATUS link_set_id(Link* link, Id id) {
+    if (!link || id == NO_ID) {
+        return ERROR;
+    }
+    link->idL = id;
+    return OK;
+}
+    
+Id link_get_id(Link* link) {
+    if (!link) {
+        return NO_ID;
+    }
+    return link->id;
+}
+
+STATUS link_set_spaceL1(Link* link, Id space) {
+    if (!link || id == NO_ID) {
+        return ERROR;
+    }
+    link->spaceL1 = id;
+    return OK;
+}
+    
+Id link_get_spaceL1(Link* link) {
+    if (!link) {
+        return NO_ID;
+    }
+    return link->spaceL1;
+}
+
+STATUS link_set_spaceL2(Link* link, Id space) {
+    if (!link || id == NO_ID) {
+        return ERROR;
+    }
+    link->spaceL2 = id;
+     return OK;
+}
+    
+Id link_get_spaceL2(Link* link) {
+    if (!link) {
+        return NO_ID;
+    }
+    return link->spaceL2;
+}
+
+STATUS link_set_statusL(Link* link, int status) {
+    if (!link || id < 0 || id > 1) {
+        return ERROR;
+    }
+    link->statusL = status;
+    return OK;
+}
+    
+Id link_get_statusL(Link* link) {
+    if (!link) {
+        return -1;
+    }
+    return link->statusL;
+}
+
+STATUS link_print(Link* link) {
+    if (!link) {
+        return ERROR;
+    }
+    
+    fprintf(stdout, "--> Link (Id: %ld; Name: %s; spaceL1: %ld; spaceL2: %ld; statusL: %d)\n",
+            link->id, link->name, link->spaceL1, link->spaceL2, link->statusL);
+    

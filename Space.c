@@ -9,14 +9,15 @@
  */
 
 #include "space.h"
+#include "link.h"
 
 struct _Space {
   Id id;
   char name[WORD_SIZE + 1];
-  Id north;
-  Id south;
-  Id east;
-  Id west;
+  Link* north;
+  Link* south;
+  Link* east;
+  Link* west;
   Set* objects;
   char* gdesc[3];
 };
@@ -41,10 +42,35 @@ Space* space_create(Id id) {
 
   new_space->name[0] = '\0';
 
-  new_space->north = NO_ID;
-  new_space->south = NO_ID;
-  new_space->east = NO_ID;
-  new_space->west = NO_ID;
+  new_space->north = link_create(id);
+  link_set_spaceL1(new_space->north, id);
+  link_set_spaceL2(new_space->north, id-1);
+  if (id != 1) link_set_statusL(new_space->north, 0);
+  else link_set_statusL(new_space->north, 1);
+    
+  new_space->south = link_create(id+25);
+  link_set_spaceL1(new_space->south, id);
+  link_set_spaceL2(new_space->south, id+1);
+  if (id != 25) link_set_statusL(new_space->south, 0);
+  else link_set_statusL(new_space->south, 1);
+    
+  new_space->east = link_create(id+50);
+  link_set_spaceL1(new_space->east, id);
+  if (id == 5 || id == 9 || id == 13 || id == 17 || id == 21 || id == 25) {
+      link_set_statusL(new_space->east, 0);
+      link_set_spaceL2(new_space->east, id+4);
+  }
+  else if(id == 8) {
+      link_set_statusL(new_space->east, 0);
+      link_set_spaceL2(new_space->east, id+8);
+  }
+  else link_set_statusL(new_space->east, 1);
+    
+  new_space->west = link_create(id+75);
+  link_set_spaceL1(new_space->west, id);
+  link_set_spaceL2(new_space->west, id-8);
+  if (id == 16) link_set_statusL(new_space->west, 0);
+  else link_set_statusL(new_space->west, 1);
 
   new_space->objects = set_create();
 
@@ -64,6 +90,10 @@ STATUS space_destroy(Space* space) {
     return ERROR;
   }
   set_destroy(space->objects);
+  link_destroy(space->north);
+  link_destroy(space->south);
+  link_destroy(space->east);
+  link_destroy(space->west);
 
   free (space->gdesc[0]);
   free (space->gdesc[1]);
@@ -91,7 +121,7 @@ STATUS space_set_north(Space* space, Id id) {
   if (!space || id == NO_ID) {
     return ERROR;
   }
-  space->north = id;
+  link_set_spaceL2(space->north, id);
   return OK;
 }
 
@@ -99,7 +129,7 @@ STATUS space_set_south(Space* space, Id id) {
   if (!space || id == NO_ID) {
     return ERROR;
   }
-  space->south = id;
+ link_set_spaceL2(space->south, id);
   return OK;
 }
 
@@ -107,7 +137,7 @@ STATUS space_set_east(Space* space, Id id) {
   if (!space || id == NO_ID) {
     return ERROR;
   }
-  space->east = id;
+ link_set_spaceL2(space->east, id);
   return OK;
 }
 
@@ -115,7 +145,7 @@ STATUS space_set_west(Space* space, Id id) {
   if (!space || id == NO_ID) {
     return ERROR;
   }
-  space->west = id;
+  link_set_spaceL2(space->west, id);
   return OK;
 }
 
@@ -150,28 +180,28 @@ Id space_get_id(Space* space) {
   return space->id;
 }
 
-Id space_get_north(Space* space) {
+Link* space_get_north(Space* space) {
   if (!space) {
     return NO_ID;
   }
   return space->north;
 }
 
-Id space_get_south(Space* space) {
+Link* space_get_south(Space* space) {
   if (!space) {
     return NO_ID;
   }
   return space->south;
 }
 
-Id space_get_east(Space* space) {
+Link* space_get_east(Space* space) {
   if (!space) {
     return NO_ID;
   }
   return space->east;
 }
 
-Id space_get_west(Space* space) {
+Link* space_get_west(Space* space) {
   if (!space) {
     return NO_ID;
   }
@@ -193,7 +223,7 @@ char** space_get_gdesc(Space* space){
 }
 
 STATUS space_print(Space* space) {
-  Id idaux = NO_ID;
+  Link* idaux = NULL;
 
   if (!space) {
     return ERROR;
@@ -201,30 +231,30 @@ STATUS space_print(Space* space) {
 
   fprintf(stdout, "--> Space (Id: %ld; Name: %s)\n", space->id, space->name);
 
-  idaux = space_get_north(space);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> North link: %ld.\n", idaux);
+  idaux = Link* link_copy(space->north);
+  if (NULL != idaux) {
+    link_print(idaux);
   } else {
     fprintf(stdout, "---> No north link.\n");
   }
 
-  idaux = space_get_south(space);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> South link: %ld.\n", idaux);
+  idaux = Link* link_copy(space->south);
+  if (NULL != idaux) {
+    link_print(idaux);
   } else {
     fprintf(stdout, "---> No south link.\n");
   }
 
-  idaux = space_get_east(space);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> East link: %ld.\n", idaux);
+  idaux = Link* link_copy(space->east);
+  if (NULL != idaux) {
+    link_print(idaux);
   } else {
     fprintf(stdout, "---> No east link.\n");
   }
 
-  idaux = space_get_west(space);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> West link: %ld.\n", idaux);
+  idaux = Link* link_copy(space->west);
+  if (NULL != idaux) {
+    link_print(idaux);
   } else {
     fprintf(stdout, "---> No west link.\n");
   }

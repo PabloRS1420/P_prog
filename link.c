@@ -139,4 +139,5 @@ STATUS link_print(Link* link) {
     
     fprintf(stdout, "--> Link (Id: %ld; Name: %s; spaceL1: %ld; spaceL2: %ld; statusL: %d)\n",
             link->id, link->name, link->spaceL1, link->spaceL2, link->statusL);
+}
     

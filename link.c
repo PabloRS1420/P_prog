@@ -122,6 +122,15 @@ Id link_get_statusL(Link* link) {
     return link->statusL;
 }
 
+Link* link_copy(const Link* link) {
+    Link* lCopy = link_create(link->id);
+    link_set_spaceL1(lCopy, link->spaceL1);
+    link_set_spaceL2(lCopy, link->spaceL2);
+    link_set_statusL(lCopy, link->statusL);
+    link_set_name(lCopy, link->name);
+    return lCopy;
+}
+
 STATUS link_print(Link* link) {
     if (!link) {
         return ERROR;

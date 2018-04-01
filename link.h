@@ -35,6 +35,7 @@ Id link_get_spaceL2(Link* link);
 STATUS link_set_statusL(Link* link, Id id);
 Id link_get_statusL(Link* link);
 
+Link* link_copy(const Link* link);
 STATUS link_print(FILE* f, Link* link);
 
 #endif

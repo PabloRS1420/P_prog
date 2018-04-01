@@ -124,6 +124,7 @@ Id link_get_statusL(Link* link) {
 
 Link* link_copy(const Link* link) {
     Link* lCopy = link_create(link->id);
+    if (!lCopy) return NULL;
     link_set_spaceL1(lCopy, link->spaceL1);
     link_set_spaceL2(lCopy, link->spaceL2);
     link_set_statusL(lCopy, link->statusL);

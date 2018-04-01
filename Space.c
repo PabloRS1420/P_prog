@@ -8,9 +8,6 @@
  * @copyright GNU Public License
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "space.h"
 
 struct _Space {
@@ -20,14 +17,8 @@ struct _Space {
   Id south;
   Id east;
   Id west;
-  Id object;
-  Gdesc *gdesc;
-};
-
-struct _Gdesc {
-  char *gdesc1[7];
-  char *gdesc2[7];
-  char *gdesc3[7];
+  Set* objects;
+  char* gdesc[3];
 };
 
 /****************************/
@@ -36,37 +27,47 @@ struct _Gdesc {
 
 Space* space_create(Id id) {
 
-  Space *newSpace = NULL;
+  Space* new_space = NULL;
 
   if (id == NO_ID)
     return NULL;
 
-  newSpace = (Space *) malloc(sizeof (Space));
+  new_space = (Space *) malloc(sizeof (Space));
 
-  if (newSpace == NULL) {
+  if (new_space == NULL) {
     return NULL;
   }
-  newSpace->id = id;
+  new_space->id = id;
 
-  newSpace->name[0] = '\0';
+  new_space->name[0] = '\0';
 
-  newSpace->north = NO_ID;
-  newSpace->south = NO_ID;
-  newSpace->east = NO_ID;
-  newSpace->west = NO_ID;
+  new_space->north = NO_ID;
+  new_space->south = NO_ID;
+  new_space->east = NO_ID;
+  new_space->west = NO_ID;
 
-  newSpace->object = FALSE;
-  newSpace->gdesc->gdesc1 = '\0';
-  newSpace->gdesc->gdesc2 = '\0';
-  newSpace->gdesc->gdesc3 = '\0';
+  new_space->objects = set_create();
 
-  return newSpace;
+  new_space->gdesc[0]=(char*) malloc((LINE_SIZE+1)*sizeof(char));
+  new_space->gdesc[1]=(char*) malloc((LINE_SIZE+1)*sizeof(char));
+  new_space->gdesc[2]=(char*) malloc((LINE_SIZE+1)*sizeof(char));
+
+  sprintf(new_space->gdesc[0], "       ");
+  sprintf(new_space->gdesc[1], "       ");
+  sprintf(new_space->gdesc[2], "       ");
+
+  return new_space;
 }
 
 STATUS space_destroy(Space* space) {
   if (!space) {
     return ERROR;
   }
+  set_destroy(space->objects);
+
+  free (space->gdesc[0]);
+  free (space->gdesc[1]);
+  free (space->gdesc[2]);
 
   free(space);
   space = NULL;
@@ -118,26 +119,22 @@ STATUS space_set_west(Space* space, Id id) {
   return OK;
 }
 
-STATUS space_set_object(Space* space, Id id) {
+STATUS space_add_object(Space* space, Id id) {
   if (!space || id == NO_ID) {
     return ERROR;
   }
-  space->object = id;
-  return OK;
+  return set_add_element(space_get_object_set(space), id);
 }
 
-STATUS space_set_gdesc (Space* space, Gdesc* gdesc){
-  int i=0;
-  if (!space || gdesc == NULL) {
+STATUS space_set_gdesc (Space* space, char* gdesc[]){
+  if(!space){
     return ERROR;
   }
-  strcpy(space->gdesc->gdesc1, gdesc->gdesc1);
-  strcpy(space->gdesc->gdesc2, gdesc->gdesc2);
-  strcpy(space->gdesc->gdesc3, gdesc->gdesc3);
-  
+  strcpy(space->gdesc[0],gdesc[0]);
+  strcpy(space->gdesc[1],gdesc[1]);
+  strcpy(space->gdesc[2],gdesc[2]);
   return OK;
 }
-
 
 const char * space_get_name(Space* space) {
   if (!space) {
@@ -181,23 +178,21 @@ Id space_get_west(Space* space) {
   return space->west;
 }
 
-Id space_get_object(Space* space) {
+Set* space_get_object_set(Space* space) {
   if (!space) {
-    return NO_ID;
+    return NULL;
   }
-  return space->object;
+  return space->objects;
 }
 
-gdesc* space_get_gdesc(Space* space) {
-  if (!space) {
+char** space_get_gdesc(Space* space){
+  if (!space){
     return NULL;
   }
   return space->gdesc;
 }
 
-
 STATUS space_print(Space* space) {
-  int i=0;
   Id idaux = NO_ID;
 
   if (!space) {
@@ -234,17 +229,16 @@ STATUS space_print(Space* space) {
     fprintf(stdout, "---> No west link.\n");
   }
 
-  idaux = space_get_object(space);
-  if (NO_ID != idaux) {
-    fprintf(stdout, "---> Object link: %ld.\n", idaux);
-  } else {
-    fprintf(stdout, "---> No object link.\n");
+  fprintf(stdout, "---> Objects located in the Space:\n");
+  if(set_print(space_get_object_set(space)) == -1){
+    return ERROR;
   }
 
-  fprintf(stdout, "---> Gdesc:\n");
-  for (i=0; i<3; i++){
-    fprintf(stdout, "%s\n",space_get_gdesc(space)[i]);
-  }
+  fprintf(stdout, "---> Gdesc of the Space:\n");
+  fprintf(stdout, "%s\n",space_get_gdesc(space)[0]);
+  fprintf(stdout, "%s\n",space_get_gdesc(space)[1]);
+  fprintf(stdout, "%s\n",space_get_gdesc(space)[2]);
+
 
   return OK;
 }

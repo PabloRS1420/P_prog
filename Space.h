@@ -40,7 +40,7 @@ STATUS space_destroy(Space* space);
 
 /**
   * @description Returns the Id of the space entered.
-  * @input Sapce*
+  * @input Space*
   * @output Id
   * @author Frederik Mayer
   */

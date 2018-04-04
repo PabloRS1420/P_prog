@@ -14,7 +14,7 @@
 struct _Link {
     Id idL, spaceL1, spaceL2;
     char nameL[WORD_SIZE + 1];
-    int statusL //statusL = 0 link open, statusL = 1 link closed
+    Id statusL //statusL = 0 link open, statusL = 1 link closed
 }
 
 Link* link_create(Id id) {

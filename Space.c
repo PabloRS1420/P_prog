@@ -42,35 +42,56 @@ Space* space_create(Id id) {
 
   new_space->name[0] = '\0';
 
-  new_space->north = link_create(id);
+  new_space->north = link_create(id-1);
   link_set_spaceL1(new_space->north, id);
   link_set_spaceL2(new_space->north, id-1);
-  if (id != 1) link_set_statusL(new_space->north, 0);
-  else link_set_statusL(new_space->north, 1);
     
-  new_space->south = link_create(id+25);
+  new_space->south = link_create(id);
   link_set_spaceL1(new_space->south, id);
   link_set_spaceL2(new_space->south, id+1);
-  if (id != 25) link_set_statusL(new_space->south, 0);
-  else link_set_statusL(new_space->south, 1);
     
-  new_space->east = link_create(id+50);
-  link_set_spaceL1(new_space->east, id);
   if (id == 5 || id == 9 || id == 13 || id == 17 || id == 21 || id == 25) {
-      link_set_statusL(new_space->east, 0);
-      link_set_spaceL2(new_space->east, id+4);
+      if (id == 5) x = 25;
+      else if (id == 9) x = 26;
+      else if (id == 13) x = 27;
+      else if (id == 17) x = 28;
+      else if (id == 21) x = 29;
+      else if (id == 25) x = 30;
+      new_space->west = link_create(x);
+      link_set_spaceL1(new_space->west, id);
+      link_set_spaceL2(new_space->west, id+4);
   }
   else if(id == 8) {
-      link_set_statusL(new_space->east, 0);
-      link_set_spaceL2(new_space->east, id+8);
+      new_space->west = link_create(30);
+      link_set_spaceL1(new_space->west, id);
+      link_set_spaceL2(new_space->west, id+8);
   }
-  else link_set_statusL(new_space->east, 1);
+  else if(id == 22) {
+      new_space->west = link_create(31);
+      link_set_spaceL1(new_space->west, id);
+      link_set_spaceL2(new_space->west, id-21);
+  }
+  else {
+      new_space->west = link_create(-1);
+      link_set_spaceL1(new_space->west, -1);
+      link_set_spaceL2(new_space->west, -1);
+  }
     
-  new_space->west = link_create(id+75);
-  link_set_spaceL1(new_space->west, id);
-  link_set_spaceL2(new_space->west, id-8);
-  if (id == 16) link_set_statusL(new_space->west, 0);
-  else link_set_statusL(new_space->west, 1);
+  if (id == 16) {
+     new_space->east = link_create(30);
+     link_set_spaceL1(new_space->east, id);
+     link_set_spaceL2(new_space->east, id-8);
+  }
+  else if(id == 22) {
+      new_space->east = link_create(31);
+      link_set_spaceL1(new_space->east, id);
+      link_set_spaceL2(new_space->east, id-21);
+  }
+  else {
+     new_space->east = link_create(-1);
+     link_set_spaceL1(new_space->east, -1);
+     link_set_spaceL2(new_space->east, -1);
+  }
 
   new_space->objects = set_create();
 

@@ -69,71 +69,104 @@ const char* space_get_name(Space* space);
 
 /**
   * @brief Sets the north link of the space.
-  * @param Space*
+  * @param Space*, Id, Id, Id, char, LINK_STATUS
   * @return OK if everything worked correctly or ERROR if not.
   * @author Oriana Nicole Pastor Sánchez
   */
-STATUS space_set_north(Space* space, Id id);
+STATUS space_set_north(Space* space, Id idL, Id spaceL1, Id spaceL2, char nameL, LINK_STATUS statusL);
 
 /**
-  * @brief Returns the Id of the space which is in the north.
+  * @brief Returns the Link of the space which is in the north.
   * @param Space*
-  * @return Id
+  * @return Link*
   * @author Frederik Mayer
   */
-Id space_get_north(Space* space);
+Link* space_get_north(Space* space);
 
 /**
   * @brief Sets the south link of the space.
-  * @param Space*
+  * @param Space*, Id, Id, Id, char, LINK_STATUS
   * @return OK if everything worked correctly or ERROR if not.
   * @author Oriana Nicole Pastor Sánchez
   */
-STATUS space_set_south(Space* space, Id id);
+STATUS space_set_south(Space* space, Id idL, Id spaceL1, Id spaceL2, char nameL, LINK_STATUS statusL);
 
 /**
-  * @brief Returns the Id of the space which is in the south.
+  * @brief Returns the Link of the space which is in the south.
   * @param Space*
-  * @return Id
+  * @return Link*
   * @author Frederik Mayer
   */
-Id space_get_south(Space* space);
+Link* space_get_south(Space* space);
 
 /**
   * @brief Sets the east link of the space.
-  * @param Space*
+  * @param Space*, Id, Id, Id, char, LINK_STATUS
   * @return OK if everything worked correctly or ERROR if not.
   * @author Oriana Nicole Pastor Sánchez
   */
-STATUS space_set_east(Space* space, Id id);
+STATUS space_set_east(Space* space, Id idL, Id spaceL1, Id spaceL2, char nameL, LINK_STATUS statusL);
 
 /**
-  * @brief Returns the Id of the space which is in the east.
+  * @brief Returns the Link of the space which is in the east.
   * @param Space*
-  * @return Id
+  * @return Link*
   * @author Frederik Mayer
   */
-Id     space_get_east(Space* space);
+Link* space_get_east(Space* space);
 
 /**
   * @brief Sets the west link of the space.
-  * @param Space*, Id
+  * @param Space*, Id, Id, Id, char, LINK_STATUS
   * @return  OK if everything worked correctly or ERROR if not.
   * @author Oriana Nicole Pastor Sánchez
   */
-STATUS space_set_west(Space* space, Id id);
+STATUS space_set_west(Space* space, Id idL, Id spaceL1, Id spaceL2, char nameL, LINK_STATUS statusL);
 
 /**
-  * @brief Returns the Id of the space which is in the west.
+  * @brief Returns the Link of the space which is in the west.
   * @param Space*
-  * @return Id
+  * @return Link*
   * @author Frederik Mayer
   */
-Id     space_get_west(Space* space);
+Link* space_get_west(Space* space);
 
 /**
-  * @brief Adds the Id to the object array of the space
-  * @param Space*, Id
+  * @brief Sets the up link of the space.
+  * @param Space*, Id, Id, Id, char, LINK_STATUS
+  * @return  OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+STATUS space_set_up(Space* space, Id idL, Id spaceL1, Id spaceL2, char nameL, LINK_STATUS statusL);
+
+/**
+  * @brief Returns the Link of the space which is up.
+  * @param Space*
+  * @return Link*
+  * @author Pablo Rosales
+  */
+Link* space_get_up(Space* space);
+
+/**
+  * @brief Sets the down link of the space.
+  * @param Space*, Id, Id, Id, char, LINK_STATUS
+  * @return  OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+STATUS space_set_down(Space* space, Id idL, Id spaceL1, Id spaceL2, char nameL, LINK_STATUS statusL);
+
+/**
+  * @brief Returns the Link of the space which is down.
+  * @param Space*
+  * @return Link*
+  * @author Pablo Rosales
+  */
+Link* space_get_down(Space* space);
+
+
+/**
+  * @brief Adds the Id to the object array of the space.
+  * @param Space*, Id, Id, Id, char, LINK_STATUS
   * @return OK if everything worked correctly or ERROR if not.
   * @author Frederik Mayer
   */
@@ -178,6 +211,22 @@ STATUS space_set_description(Space* space, char* des);
   * @author Frederik Mayer
   */
 const char* space_get_description(Space* space);
+
+/**
+  * @brief Sets the illumination of the space.
+  * @param Space* space, ILLUMINATION_SPACE illumination
+  * @return  OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+STATUS space_set_illumination(Space* space, ILLUMINATION_SPACE illumination);
+
+/**
+  * @brief Returns the Link of the space which is up.
+  * @param Space*
+  * @return ILLUMINATION_SPACE
+  * @author Pablo Rosales
+  */
+ILLUMINATION_SPACE space_get_illumination(Space* space);
 
 /**
   * @brief Prints the information of the space.

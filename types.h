@@ -51,5 +51,9 @@ typedef enum {
   OPEN, CLOSED
 } LINK_STATUS;
 
+typedef enum {
+  ILUMINATED, DARKENED
+} ILUMINATION_SPACE;
+
 
 #endif

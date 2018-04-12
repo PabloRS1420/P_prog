@@ -52,8 +52,8 @@ typedef enum {
 } LINK_STATUS;
 
 typedef enum {
-  ILUMINATED, DARKENED
-} ILUMINATION_SPACE;
+  ILLUMINATED, DARKENED
+} ILLUMINATION_SPACE;
 
 
 #endif

@@ -1,4 +1,0 @@
-Move:OK
-Following:OK
-Following:OK
-Exit:OK

@@ -17,6 +17,7 @@ struct _Object {
   char name[WORD_SIZE + 1];
   Id space_id;
   char description[WORD_SIZE + 1];
+  char description2[WORD_SIZE + 1];
   BOOL movable;
   BOOL moved;
   BOOL hidden;
@@ -103,6 +104,18 @@ STATUS object_set_description(Object* object, char* des){
   return OK;
 }
 
+STATUS object_set_description2(Object* object, char* des){
+  if (!object || !des) {
+    return ERROR;
+  }
+
+  if (!strcpy(object->description2, des)) {
+    return ERROR;
+  }
+
+  return OK;
+}
+
 STATUS object_set_movable(Object* object, BOOL movable){
   if (!object || !movable) {
     return ERROR;
@@ -178,6 +191,13 @@ const char* object_get_description(Object* object){
   return object->description;
 }
 
+const char* object_get_description2(Object* object){
+  if (!object){
+    return NULL;
+  }
+  return object->description2;
+}
+
 BOOL object_get_movable(Object* object){
   if (!object) {
     return NULL_BOOLEAN;
@@ -231,11 +251,17 @@ STATUS object_print(Object* object){
     return ERROR;
   }
   
-  char a[20], b[20], x[20], y[20], z[20];
+  char a[WORD_SIZE + 1], b[WORD_SIZE + 1], x[WORD_SIZE + 1], y[WORD_SIZE + 1], z[WORD_SIZE + 1], description[WORD_SIZE + 1];
   if (object->moved == FALSE) a = "Not movable";
   else a = "Movable";
-  if (object->moved == FALSE) b = "Not moved";
-  else b = "Moved";
+  if (object->moved == FALSE){
+    b = "Not moved";
+    strcpy(description, object->description);
+  }
+  else {
+    b = "Moved";
+    strcpy(description, object->description2);
+  }
   if (object->hidden == FALSE) x = "Not hidden";
   else x = "Hidden";
   if (object->illuminate == FALSE) y = "Cant illuminate";
@@ -245,18 +271,18 @@ STATUS object_print(Object* object){
   
   if (object->movable == FALSE){
     if (object->illuminate == FALSE){
-      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; %s; %s; Open: %ld; %s)\n", object->id, object->name, object->space_id, a, x, object->open, y);
+      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Description: %s; %s; %s; Open: %ld; %s)\n", object->id, object->name, object->space_id, description, a, x, object->open, y);
     }
     else {
-      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; %s; %s; Open: %ld; %s; %s)\n", object->id, object->name, object->space_id, a, x, object->open, y, z);
+      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Description: %s; %s; %s; Open: %ld; %s; %s)\n", object->id, object->name, object->space_id, description, a, x, object->open, y, z);
     }
   }
   else {
     if (object->illuminate == FALSE){
-      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; %s; %s; %s; Open: %ld; %s)\n", object->id, object->name, object->space_id, a, b, x, object->open, y);
+      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Description: %s; %s; %s; %s; Open: %ld; %s)\n", object->id, object->name, object->space_id, description, a, b, x, object->open, y);
     }
     else {
-      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; %s; %s; %s; Open: %ld; %s; %s)\n", object->id, object->name, object->space_id, a, b, x, object->open, y, z);
+      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Description: %s; %s; %s; %s; Open: %ld; %s; %s)\n", object->id, object->name, object->space_id, description, a, b, x, object->open, y, z);
     }
   }
     

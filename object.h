@@ -79,6 +79,38 @@ STATUS object_set_space_id(Object *object, Id space_id);
 STATUS object_set_description(Object* object, char* des);
 
 /**
+  * @brief Sets if the given object is movable or not.
+  * @param Object*, BOOL
+  * @return OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+STATUS object_set_movable(Object* object, BOOL movable);
+
+/**
+  * @brief Sets if the given object has been moved from his original location or not.
+  * @param Object*, BOOL
+  * @return OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+STATUS object_set_moved(Object* object, BOOL moved);
+
+/**
+  * @brief Sets if the given object is hidden or not.
+  * @param Object*, BOOL
+  * @return OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+STATUS object_set_hidden(Object* object, BOOL hidden);
+
+/**
+  * @brief Sets the id of the link which the given object can open.
+  * @param Object*, Id
+  * @return OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+STATUS object_set_open(Object* object, Id open);
+
+/**
   * @brief Returns the name of the given object.
   * @param Object*
   * @return const Char*
@@ -109,5 +141,37 @@ STATUS object_print(Object* object);
   * @author Frederik Mayer
   */
 const char* object_get_description(Object* object);
+
+/**
+  * @brief Gets TRUE or FALSE depending if the given object is movable or not.
+  * @param Object*
+  * @return BOOL
+  * @author Pablo Rosales
+  */
+BOOL object_set_movable(Object* object);
+
+/**
+  * @brief Gets TRUE or FALSE depending if the given object has been moved from his original location or not.
+  * @param Object*
+  * @return BOOL
+  * @author Pablo Rosales
+  */
+BOOL object_set_moved(Object* object, BOOL moved);
+
+/**
+  * @brief Gets TRUE or FALSE depending if the given object is hidden or not.
+  * @param Object*
+  * @return BOOL
+  * @author Pablo Rosales
+  */
+BOOL object_set_hidden(Object* object, BOOL hidden);
+
+/**
+  * @brief Gets the id of the link which the given object can open.
+  * @param Object*
+  * @return Id
+  * @author Pablo Rosales
+  */
+Id object_set_open(Object* object);
 
 #endif

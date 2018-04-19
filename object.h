@@ -79,6 +79,14 @@ STATUS object_set_space_id(Object *object, Id space_id);
 STATUS object_set_description(Object* object, char* des);
 
 /**
+  * @brief Sets the description when the object is not in its original location of the given object.
+  * @param Object*, Id
+  * @return OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+STATUS object_set_description2(Object* object, char* des);
+
+/**
   * @brief Sets if the given object is movable or not.
   * @param Object*, BOOL
   * @return OK if everything worked correctly or ERROR if not.
@@ -157,6 +165,14 @@ STATUS object_print(Object* object);
   * @author Frederik Mayer
   */
 const char* object_get_description(Object* object);
+
+/**
+  * @brief Gets the description when the object is not in its original location of the given object.
+  * @param Object*, Id
+  * @return OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+const char* object_get_description2(Object* object);
 
 /**
   * @brief Gets TRUE or FALSE depending if the given object is movable or not.

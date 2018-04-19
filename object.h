@@ -111,6 +111,22 @@ STATUS object_set_hidden(Object* object, BOOL hidden);
 STATUS object_set_open(Object* object, Id open);
 
 /**
+  * @brief Sets if the given object can illuminate a space or not.
+  * @param Object*, BOOL
+  * @return OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+STATUS object_set_illuminate(Object* object, BOOL illuminate);
+
+/**
+  * @brief Sets if the given object that can illuminate a space is On or Off.
+  * @param Object*, BOOL
+  * @return OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+STATUS object_set_switchedOn(Object* object, BOOL switchedOn);
+
+/**
   * @brief Returns the name of the given object.
   * @param Object*
   * @return const Char*
@@ -148,7 +164,7 @@ const char* object_get_description(Object* object);
   * @return BOOL
   * @author Pablo Rosales
   */
-BOOL object_set_movable(Object* object);
+BOOL object_get_movable(Object* object);
 
 /**
   * @brief Gets TRUE or FALSE depending if the given object has been moved from his original location or not.
@@ -156,7 +172,7 @@ BOOL object_set_movable(Object* object);
   * @return BOOL
   * @author Pablo Rosales
   */
-BOOL object_set_moved(Object* object, BOOL moved);
+BOOL object_get_moved(Object* object, BOOL moved);
 
 /**
   * @brief Gets TRUE or FALSE depending if the given object is hidden or not.
@@ -164,7 +180,7 @@ BOOL object_set_moved(Object* object, BOOL moved);
   * @return BOOL
   * @author Pablo Rosales
   */
-BOOL object_set_hidden(Object* object, BOOL hidden);
+BOOL object_get_hidden(Object* object, BOOL hidden);
 
 /**
   * @brief Gets the id of the link which the given object can open.
@@ -172,6 +188,24 @@ BOOL object_set_hidden(Object* object, BOOL hidden);
   * @return Id
   * @author Pablo Rosales
   */
-Id object_set_open(Object* object);
+Id object_get_open(Object* object);
+
+/**
+  * @brief Gets TRUE or FALSE depending if the given object can illuminate a space or not.
+  * @param Object*
+  * @return BOOL
+  * @author Pablo Rosales
+  */
+STATUS object_get_illuminate(Object* object);
+
+/**
+  * @brief Gets TRUE or FALSE depending if the given object that can illuminate a space is On or Off.
+  * @param Object*
+  * @return BOOL
+  * @author Pablo Rosales
+  */
+STATUS object_get_switchedOn(Object* object);
+
+
 
 #endif

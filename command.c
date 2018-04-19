@@ -18,8 +18,8 @@ struct _Command{
 
 /*strings to be compared with the input typed by the player*/
 
-char *cmd_to_str[N_CMD] = {"No command", "Unknown", "Exit", "Following", "Previous",
- 														"Grab", "Drop", "Throw", "Left", "Right", "Check", "Move"};
+char *cmd_to_str[N_CMD] = {"No command", "Unknown", "Exit", "Following", "Previous", "Grab", "Drop", "Throw", "Left", "Right", "Check", "Move"};
+ 														
 char *short_cmd_to_str[N_CMD] =  {"","","e","f","p","g","d","t","l","r","c", "m"};
 
 

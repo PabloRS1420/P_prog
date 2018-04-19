@@ -17,6 +17,10 @@ struct _Object {
   char name[WORD_SIZE + 1];
   Id space_id;
   char description[WORD_SIZE + 1];
+  BOOL movable;
+  BOOL moved;
+  BOOL hidden;
+  Id open;
 };
 
 /****************************/
@@ -36,8 +40,12 @@ Object* object_create(Id id){
   }
 
   newObject->id = id;
+  newObject->movable = FALSE;
+  newObject->moved = FALSE;
+  newObject->hidden = FALSE;
+  newObject->open = NO_ID;
 
-	return newObject;
+  return newObject;
 }
 
 STATUS object_destroy(Object* object){
@@ -91,6 +99,40 @@ STATUS object_set_description(Object* object, char* des){
   return OK;
 }
 
+STATUS object_set_movable(Object* object, BOOL movable){
+  if (!object || !movable) {
+    return ERROR;
+  }
+  
+  object->movable = movable;
+  return OK;
+}
+
+STATUS object_set_moved(Object* object, BOOL moved){
+  if (!object || !moved) {
+    return ERROR;
+  }
+  
+  object->moved = moved;
+  return OK;
+}
+STATUS object_set_hidden(Object* object, BOOL hidden){
+  if (!object || !hidden) {
+    return ERROR;
+  }
+  
+  object->hidden = hidden;
+  return OK;
+}
+STATUS object_set_open(Object* object, Id open){
+  if (!object || open == NO_ID) {
+    return ERROR;
+  }
+  
+  object->open = open;
+  return OK;
+}
+
 const char* object_get_name(Object* object){
   if (!object){
     return NULL;
@@ -112,12 +154,70 @@ const char* object_get_description(Object* object){
   return object->description;
 }
 
+BOOL object_set_movable(Object* object){
+  if (!object) {
+    return NULL_BOOLEAN;
+  }
+  
+  return object->movable;
+}
+
+BOOL object_set_moved(Object* object){
+  if (!object) {
+    return NULL_BOOLEAN;
+  }
+  
+  return object->moved;
+}
+
+BOOL object_set_hidden(Object* object, BOOL hidden){
+  if (!object) {
+    return NULL_BOOLEAN;
+  }
+  
+  return object->hidden;
+}
+
+Id object_set_open(Object* object){
+  if (!object) {
+    return NO_ID;
+  }
+  
+  return object->open;
+}
+
 STATUS object_print(Object* object){
   if (!object) {
     return ERROR;
   }
-
-  fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld)\n", object->id, object->name, object->space_id);
+  
+  if (object->movable == FALSE){
+    if (object->hidden == FALSE){
+      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Not movable; Not hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
+    }
+    else {
+      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Not movable; Hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
+    }
+  }
+  else {
+    if (object->moved == FALSE){
+      if (object->hidden == FALSE){
+        fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Movable; Not moved; Not hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
+      }
+      else {
+        fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Movable; Not moved; Hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
+      }
+    }
+    else {
+      if (object->hidden == FALSE){
+        fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Movable; Moved; Not hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
+      }
+      else {
+        fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Movable; Moved; Hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
+      }
+    }
+  }
+    
 
 	return OK;
 }

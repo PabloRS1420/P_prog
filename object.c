@@ -231,21 +231,33 @@ STATUS object_print(Object* object){
     return ERROR;
   }
   
-  char w[20], x[20], y[20], z[20];
-  if (object->moved == FALSE) w = "Not moved";
-  else w = "Moved";
+  char a[20], b[20], x[20], y[20], z[20];
+  if (object->moved == FALSE) a = "Not movable";
+  else a = "Movable";
+  if (object->moved == FALSE) b = "Not moved";
+  else b = "Moved";
   if (object->hidden == FALSE) x = "Not hidden";
   else x = "Hidden";
-  if (object->illuminate == FALSE) y = "Not illuminated";
-  else y = "Illuminated";
-  if (object->switchedOn == FALSE) z = "Not switchedOn";
+  if (object->illuminate == FALSE) y = "Cant illuminate";
+  else y = "Can illuminate";
+  if (object->switchedOn == FALSE) z = "SwitchedOff";
   else z = "SwitchedOn";
   
   if (object->movable == FALSE){
-    fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Not movable; %s; Open: %ld; %s; %s)\n", object->id, object->name, object->space_id, x, object->open, y, z);
+    if (object->illuminate == FALSE){
+      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; %s; %s; Open: %ld; %s)\n", object->id, object->name, object->space_id, a, x, object->open, y);
+    }
+    else {
+      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; %s; %s; Open: %ld; %s; %s)\n", object->id, object->name, object->space_id, a, x, object->open, y, z);
+    }
   }
   else {
-    fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Not movable; %s; %s; Open: %ld; %s; %s)\n", object->id, object->name, object->space_id, w, x, object->open, y, z);
+    if (object->illuminate == FALSE){
+      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; %s; %s; %s; Open: %ld; %s)\n", object->id, object->name, object->space_id, a, b, x, object->open, y);
+    }
+    else {
+      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; %s; %s; %s; Open: %ld; %s; %s)\n", object->id, object->name, object->space_id, a, b, x, object->open, y, z);
+    }
   }
     
 	return OK;

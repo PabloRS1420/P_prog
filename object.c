@@ -21,6 +21,8 @@ struct _Object {
   BOOL moved;
   BOOL hidden;
   Id open;
+  BOOL illuminate;
+  BOOL switchedOn;
 };
 
 /****************************/
@@ -44,6 +46,8 @@ Object* object_create(Id id){
   newObject->moved = FALSE;
   newObject->hidden = FALSE;
   newObject->open = NO_ID;
+  newObject->illuminate = FALSE;
+  newObject->switchedOn = FALSE;
 
   return newObject;
 }
@@ -116,6 +120,7 @@ STATUS object_set_moved(Object* object, BOOL moved){
   object->moved = moved;
   return OK;
 }
+
 STATUS object_set_hidden(Object* object, BOOL hidden){
   if (!object || !hidden) {
     return ERROR;
@@ -124,12 +129,31 @@ STATUS object_set_hidden(Object* object, BOOL hidden){
   object->hidden = hidden;
   return OK;
 }
+
 STATUS object_set_open(Object* object, Id open){
   if (!object || open == NO_ID) {
     return ERROR;
   }
   
   object->open = open;
+  return OK;
+}
+
+STATUS object_set_illuminate(Object* object, BOOL illuminate){
+  if (!object || !illuminate) {
+    return ERROR;
+  }
+  
+  object->illuminate = illuminate;
+  return OK;
+}
+
+STATUS object_set_switchedOn(Object* object, BOOL switchedOn){
+  if (!object || !switchedOn) {
+    return ERROR;
+  }
+  
+  object->switchedOn = switchedOn;
   return OK;
 }
 
@@ -186,38 +210,43 @@ Id object_get_open(Object* object){
   return object->open;
 }
 
+BOOL object_get_illuminate(Object* object){
+  if (!object) {
+    return NULL_BOOLEAN;
+  }
+  
+  return object->illuminate;
+}
+
+BOOL object_get_switchedOn(Object* object){
+  if (!object) {
+    return NULL_BOOLEAN;
+  }
+  
+  return object->switchedOn;
+}
+
 STATUS object_print(Object* object){
   if (!object) {
     return ERROR;
   }
   
+  char w[20], x[20], y[20], z[20];
+  if (object->moved == FALSE) w = "Not moved";
+  else w = "Moved";
+  if (object->hidden == FALSE) x = "Not hidden";
+  else x = "Hidden";
+  if (object->illuminate == FALSE) y = "Not illuminated";
+  else y = "Illuminated";
+  if (object->switchedOn == FALSE) z = "Not switchedOn";
+  else z = "SwitchedOn";
+  
   if (object->movable == FALSE){
-    if (object->hidden == FALSE){
-      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Not movable; Not hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
-    }
-    else {
-      fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Not movable; Hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
-    }
+    fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Not movable; %s; Open: %ld; %s; %s)\n", object->id, object->name, object->space_id, x, object->open, y, z);
   }
   else {
-    if (object->moved == FALSE){
-      if (object->hidden == FALSE){
-        fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Movable; Not moved; Not hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
-      }
-      else {
-        fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Movable; Not moved; Hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
-      }
-    }
-    else {
-      if (object->hidden == FALSE){
-        fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Movable; Moved; Not hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
-      }
-      else {
-        fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Movable; Moved; Hidden; Open: %ld)\n", object->id, object->name, object->space_id, object->open);
-      }
-    }
+    fprintf(stdout, "--> Object (Id: %ld; Name: %s; SpaceId: %ld; Not movable; %s; %s; Open: %ld; %s; %s)\n", object->id, object->name, object->space_id, w, x, object->open, y, z);
   }
     
-
 	return OK;
 }

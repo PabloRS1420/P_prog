@@ -154,7 +154,7 @@ const char* object_get_description(Object* object){
   return object->description;
 }
 
-BOOL object_set_movable(Object* object){
+BOOL object_get_movable(Object* object){
   if (!object) {
     return NULL_BOOLEAN;
   }
@@ -162,7 +162,7 @@ BOOL object_set_movable(Object* object){
   return object->movable;
 }
 
-BOOL object_set_moved(Object* object){
+BOOL object_get_moved(Object* object){
   if (!object) {
     return NULL_BOOLEAN;
   }
@@ -170,7 +170,7 @@ BOOL object_set_moved(Object* object){
   return object->moved;
 }
 
-BOOL object_set_hidden(Object* object, BOOL hidden){
+BOOL object_get_hidden(Object* object, BOOL hidden){
   if (!object) {
     return NULL_BOOLEAN;
   }
@@ -178,7 +178,7 @@ BOOL object_set_hidden(Object* object, BOOL hidden){
   return object->hidden;
 }
 
-Id object_set_open(Object* object){
+Id object_get_open(Object* object){
   if (!object) {
     return NO_ID;
   }

@@ -79,7 +79,7 @@ STATUS object_set_space_id(Object *object, Id space_id);
 STATUS object_set_description(Object* object, char* des);
 
 /**
-  * @brief Sets the description when the object is not in its original location of the given object.
+  * @brief Sets the description of the given object when the object is not in its original location.
   * @param Object*, Id
   * @return OK if everything worked correctly or ERROR if not.
   * @author Pablo Rosales

@@ -287,6 +287,12 @@ const char* space_get_description(Space* space){
   if (!space){
     return NULL;
   }
+  
+  if (space->illumination == DARKENED) {
+    char des[WORD_SIZE] = "The space is not illuminated";
+    return des;
+  }
+  
   return space->description;
 }
 

@@ -17,7 +17,7 @@ STATUS game_reader_load_spaces(Game* game, char* filename) {
   char line[WORD_SIZE] = "";
   char space_name[WORD_SIZE] = "";
   char* toks = NULL;
-  Id space_id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
+  Id space_id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID, up = NO_ID, down = NO_ID;
   Space* space = NULL;
   char* gdesc[3];
   char description[WORD_SIZE];
@@ -59,6 +59,10 @@ STATUS game_reader_load_spaces(Game* game, char* filename) {
       toks = strtok(NULL, "|");
       west = atol(toks);
       toks = strtok(NULL, "|");
+      up = atol(toks);
+      toks = strtok(NULL, "|");
+      down = atol(toks);
+      toks = strtok(NULL, "|");
       strcpy(gdesc[0], toks);
       toks = strtok(NULL, "|");
       strcpy(gdesc[1], toks);
@@ -69,7 +73,7 @@ STATUS game_reader_load_spaces(Game* game, char* filename) {
 
 
 #ifdef DEBUG
-      printf("Leido: %ld|%s|%ld|%ld|%ld|%ld|%s|%s|%s|%s\n", space_id, space_name, north, east, south, west, gdesc[0], gdesc[1], gdesc[2], description);
+      printf("Leido: %ld|%s|%ld|%ld|%ld|%ld|%ld|%ld|%s|%s|%s|%s\n", space_id, space_name, north, east, south, west, up, down, gdesc[0], gdesc[1], gdesc[2], description);
 #endif
       printf("Test3");
       space = space_create(space_id);
@@ -79,6 +83,8 @@ STATUS game_reader_load_spaces(Game* game, char* filename) {
       	space_set_east(space, east);
       	space_set_south(space, south);
       	space_set_west(space, west);
+        space_set_up(space, up);
+      	space_set_down(space, down);
         space_set_gdesc(space, gdesc);
         space_set_description(space, description);
         game_add_space(game, space);

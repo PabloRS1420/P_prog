@@ -2,7 +2,7 @@
  * @brief It defines the links between the spaces
  *
  * @file link.h
- * @author Oriana Pastor
+ * @author Pablo Rosales
  * @version 1.0
  * @date 18-03-2018
  * @copyright GNU Public License

@@ -2,7 +2,7 @@
  * @brief It defines the links between the spaces
  *
  * @file link.h
- * @author Oriana Pastor
+ * @author Pablo Rosales
  * @version 1.0
  * @date 18-03-2018
  * @copyright GNU Public License
@@ -29,7 +29,7 @@ typedef struct _Link Link;
   * @brief Reserves memory for a Link* initialising the struct.
   * @param id
   * @return Link*
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 Link* link_create(Id id);
 
@@ -37,7 +37,7 @@ Link* link_create(Id id);
   * @brief Frees all the memory reserved.
   * @param Link*
   * @return OK if everything went well or ERROR if not.
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 STATUS link_destroy(Link* link);
 
@@ -45,7 +45,7 @@ STATUS link_destroy(Link* link);
   * @brief Sets the name of the link entered.
   * @param Link*, char*
   * @return OK if everything went well or ERROR if not.
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 STATUS link_set_name(Link* link, char* name);
 
@@ -53,7 +53,7 @@ STATUS link_set_name(Link* link, char* name);
   * @brief Sets the id of the first space of the link entered.
   * @param Link*, Id
   * @return OK if everything went well or ERROR if not.
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 STATUS link_set_spaceL1(Link* link, Id id);
 
@@ -61,7 +61,7 @@ STATUS link_set_spaceL1(Link* link, Id id);
   * @brief Sets the id of the second space of the link entered.
   * @param Link*, Id
   * @return OK if everything went well or ERROR if not.
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 STATUS link_set_spaceL2(Link* link, Id space);
 
@@ -69,7 +69,7 @@ STATUS link_set_spaceL2(Link* link, Id space);
   * @brief Sets the id of the status of the link entered.
   * @param Link*, Id
   * @return OK if everything went well or ERROR if not.
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 STATUS link_set_statusL(Link* link, LINK_STATUS status);
 
@@ -77,7 +77,7 @@ STATUS link_set_statusL(Link* link, LINK_STATUS status);
   * @brief Gets the name of the link entered.
   * @param Link*
   * @return char*
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 
 const char* link_get_name(const Link* link);
@@ -86,7 +86,7 @@ const char* link_get_name(const Link* link);
   * @brief Gets the id of the id of the link entered.
   * @param Link*
   * @return Id
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 Id link_get_id(const Link* link);
 
@@ -94,7 +94,7 @@ Id link_get_id(const Link* link);
   * @brief Gets the id of the first space of the link entered.
   * @param Link*
   * @return Id
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 Id link_get_spaceL1(const Link* link);
 
@@ -102,7 +102,7 @@ Id link_get_spaceL1(const Link* link);
   * @brief Gets the id of the second space of the link entered.
   * @param Link*
   * @return Id
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 Id link_get_spaceL2(const Link* link);
 
@@ -110,7 +110,7 @@ Id link_get_spaceL2(const Link* link);
   * @brief Gets the id of the status of the link entered.
   * @param Link*
   * @return Id
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 LINK_STATUS link_get_statusL(const Link* link);
 
@@ -118,7 +118,7 @@ LINK_STATUS link_get_statusL(const Link* link);
   * @brief Prints the relevant data of the link.
   * @param Link*
   * @return OPEN or CLOSED
-  * @author Oriana Nicole Pastor Sánchez
+  * @author Pablo Rosales
   */
 STATUS link_print(FILE* output, const Link* link);
 

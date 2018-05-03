@@ -257,7 +257,7 @@ STATUS space_set_illumination(Space* space, ILLUMINATION_SPACE illumination){
   return OK;
 }
 
-const char * space_get_name(Space* space) {
+const char *space_get_name(Space* space) {
   if (!space) {
     return NULL;
   }
@@ -320,14 +320,14 @@ Set* space_get_object_set(Space* space) {
   return space->objects;
 }
 
-char** space_get_gdesc(Space* space){
+char **space_get_gdesc(Space* space){
   if (!space){
     return NULL;
   }
   return space->gdesc;
 }
 
-const char* space_get_description(Space* space){
+Description *space_get_description(Space* space){
   if (!space){
     return NULL;
   }

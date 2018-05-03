@@ -35,12 +35,28 @@ typedef struct _Space Space;
 Space* space_create(Id id);
 
 /**
+  * @brief It reserves memory for a Description* initialising the struct.
+  * @param Space*
+  * @return Description*
+  * @author Pablo Rosales
+  */
+Description *description_create(Space *space);
+
+/**
   * @brief It frees all the memory reserved.
   * @param Space*
   * @return OK if everything worked correctly or ERROR if not.
   * @author Oriana Nicole Pastor Sánchez
   */
 STATUS space_destroy(Space* space);
+
+/**
+  * @brief It frees all the memory reserved.
+  * @param Description*
+  * @return OK if everything worked correctly or ERROR if not.
+  * @author Pablo Rosales
+  */
+STATUS description_destroy(Description *d);
 
 /**
   * @brief Returns the Id of the space entered.
@@ -65,7 +81,6 @@ STATUS space_set_name(Space* space, char* name);
   * @author Frederik Mayer
   */
 const char* space_get_name(Space* space);
-
 
 /**
   * @brief Sets the north link of the space.
@@ -163,7 +178,6 @@ STATUS space_set_down(Space* space, Id idL, Id spaceL1, Id spaceL2, char nameL, 
   */
 Link* space_get_down(Space* space);
 
-
 /**
   * @brief Adds the Id to the object array of the space.
   * @param Space*, Id, Id, Id, char, LINK_STATUS
@@ -198,19 +212,19 @@ char** space_get_gdesc(Space* space);
 
 /**
 * @brief Sets the description of the given space.
-* @param Space*, Id
+* @param Space*, Description
 * @return OK if everything worked correctly or ERROR if not.
 * @author Frederik Mayer
 */
-STATUS space_set_description(Space* space, char* des);
+STATUS space_set_description(Space* space, Description* des);
 
 /**
   * @brief Returns the description of the given space.
   * @param Space*
-  * @return String
+  * @return Description
   * @author Frederik Mayer
   */
-const char* space_get_description(Space* space);
+Description* space_get_description(Space* space);
 
 /**
   * @brief Sets the illumination of the space.

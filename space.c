@@ -23,9 +23,20 @@ struct _Space {
   Link* down;
   Set* objects;
   char* gdesc[3];
-  char description[WORD_SIZE];
+  Description *description[WORD_SIZE];
   ILLUMINATION_SPACE illumination;
 };
+
+struct _Description {
+    ILLUMINATION_SPACE illumination;
+    Set* objects;
+    Id north;
+    Id south;
+    Id east;
+    Id west;
+    Id up;
+    Id down;
+}
 
 /****************************/
 /* Functions implementation */
@@ -71,15 +82,38 @@ Space* space_create(Id id) {
   sprintf(new_space->gdesc[0], "       ");
   sprintf(new_space->gdesc[1], "       ");
   sprintf(new_space->gdesc[2], "       ");
+    
+  new_space->description = description_create(new_space);
 
   return new_space;
 }
 
-STATUS space_destroy(Space* space) {
+Description *description_create(Space *space) {
+    Description *d = NULL;
+    
+    if(!space) return NULL;
+    
+    new_space = (Space *) malloc(sizeof (Space));
+    if (new_space == NULL) return NULL;
+    
+    d->illumination = space->illumination;
+    space->objects = space->objects;
+    d->north = space->north->spaceL1;
+    d->south = space->south->spaceL1;
+    d->east = space->east->spaceL1;
+    d->west = space->west->spaceL1;
+    d->up = space->up->spaceL1;
+    d->down = space->down->spaceL1;
+    
+    return d;
+}
+
+STATUS space_destroy(Space *space) {
   if (!space) {
     return ERROR;
   }
   set_destroy(space->objects);
+  description->destroy(space->dscription)
 
   free (space->gdesc[0]);
   free (space->gdesc[1]);
@@ -89,6 +123,16 @@ STATUS space_destroy(Space* space) {
   space = NULL;
 
   return OK;
+}
+
+STATUS description_destroy(Description *d) {
+    if (!d) {
+        return ERROR;
+    }
+    
+    set_destroy(d->objects);
+    free(d);
+    return OK;
 }
 
 STATUS space_set_name(Space* space, char* name) {
@@ -192,7 +236,7 @@ STATUS space_set_gdesc (Space* space, char* gdesc[]){
   return OK;
 }
 
-STATUS space_set_description(Space* space, char* des){
+STATUS space_set_description(Space* space, Description* des){
   if (!space || !des) {
     return ERROR;
   }
